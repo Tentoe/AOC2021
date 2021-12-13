@@ -1,24 +1,24 @@
 input_data = open("day10.input").read().split("\n")
 
-chunk_dict= {
-    '(':')',
-    '[':']',
-    '{':'}',
-    '<':'>'
+chunk_dict = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+    '<': '>'
 }
 
-points= {
-    ')':3,
-    ']':57,
-    '}':1197,
-    '>':25137
+points = {
+    ')': 3,
+    ']': 57,
+    '}': 1197,
+    '>': 25137
 }
 
-points2= {
-    '(':1,
-    '[':2,
-    '{':3,
-    '<':4
+points2 = {
+    '(': 1,
+    '[': 2,
+    '{': 3,
+    '<': 4
 }
 
 score = 0
@@ -48,7 +48,6 @@ for linenum, line in enumerate(input_data):
         linescores.append(linescore)
 
 print(score)
-
 
 
 print("aufgabe 2")

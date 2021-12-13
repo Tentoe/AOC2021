@@ -4,16 +4,16 @@ import numpy as np
 
 input_data = open("day8.input").read().split("\n")
 
-sure = {2:1,
-        3:7,
-        4:4,
-        7:8}
+sure = {2: 1,
+        3: 7,
+        4: 4,
+        7: 8}
 
 data = []
 
 for item in input_data:
     s = item.split(' | ')
-    data.append((s[0].split(' '),s[1].split(' ')))
+    data.append((s[0].split(' '), s[1].split(' ')))
 
 counter = 0
 
@@ -36,28 +36,28 @@ for first, second in data:
 
     for key in wire_map.keys():
         first.remove(key)
-    #3+
+    # 3+
     for item in first:
         if len(set(item + map_wire[1] + map_wire[7])) == 5:
             wire_map[item] = 3
             map_wire[3] = item
             first.remove(item)
             break
-    #6+
+    # 6+
     for item in first:
         if len(set(item + map_wire[1])) == 7:
             wire_map[item] = 6
             map_wire[6] = item
             first.remove(item)
             break
-    #9+
+    # 9+
     for item in first:
         if len(item) == 6 and len(set(item+map_wire[4])) == 6:
             wire_map[item] = 9
             map_wire[9] = item
             first.remove(item)
             break
-    #0+
+    # 0+
     for item in first:
         if len(item) == 6:
             wire_map[item] = 0
@@ -65,7 +65,7 @@ for first, second in data:
             first.remove(item)
             break
 
-    #2
+    # 2
     for item in first:
         if len(set(item+map_wire[4])) == 7:
             wire_map[item] = 2
@@ -73,7 +73,7 @@ for first, second in data:
             first.remove(item)
             break
 
-    #5
+    # 5
     wire_map[first[0]] = 5
     map_wire[5] = first[0]
 
@@ -84,6 +84,6 @@ for first, second in data:
                 number += str(wire_map[digit])
     print(number)
     out_sum += int(number)
-    
+
 
 print(out_sum)

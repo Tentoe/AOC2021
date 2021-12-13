@@ -19,7 +19,6 @@ def getCards(data):
             for num in range(0, len(text), 3):
                 newline.append(int(text[num:num+2]))
             card.append(newline)
-            
 
         ret.append(card)
 
@@ -37,6 +36,7 @@ def getWinner(data):
                 return idx
     return -1
 
+
 def getWinners(data):
     ret = []
     for idx, card in enumerate(data):
@@ -49,11 +49,13 @@ def getWinners(data):
                 ret.append(idx)
     return ret
 
+
 def markCards(cards, drawn):
     for card in cards:
         for idx, line in enumerate(card):
-            card[idx] = [ -1 if digit == drawn else digit for digit in line ]
+            card[idx] = [-1 if digit == drawn else digit for digit in line]
         test = card
+
 
 cards = getCards(input_data)
 
@@ -61,7 +63,7 @@ for drawn in draw:
     markCards(cards, int(drawn))
     winner = getWinner(cards)
     if winner >= 0:
-        print("Winning:",winner, cards[winner])
+        print("Winning:", winner, cards[winner])
         score = 0
         for line in cards[winner]:
             for digit in line:
@@ -73,7 +75,7 @@ for drawn in draw:
 cards = getCards(input_data)
 
 for drawn in draw:
-    
+
     markCards(cards, int(drawn))
     winners = getWinners(cards)
     winners.reverse()
@@ -87,7 +89,6 @@ for drawn in draw:
                     if digit > 0:
                         score += digit
             print(int(drawn) * score)
-            print(drawn,score)
+            print(drawn, score)
             print(last)
             break
-        

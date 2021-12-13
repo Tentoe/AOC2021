@@ -13,4 +13,3 @@ for day in range(256):
     population.append(parents)
 
 print(sum(population))
-        

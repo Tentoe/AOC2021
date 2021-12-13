@@ -15,5 +15,4 @@ for item in input_data:
         aim -= int(item[1])
 
 
-
 print(horizontal, depth, aim, horizontal * depth)

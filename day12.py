@@ -13,8 +13,10 @@ for (a, b) in input_data:
 connections += input_data
 connections.sort()
 
+
 def part1(path, b):
     return b not in path
+
 
 def part2(path, b):
     count = Counter(path + [b])
@@ -27,8 +29,9 @@ def part2(path, b):
                 lower2 += 1
             else:
                 return False
-        
+
     return lower2 <= 1
+
 
 start_paths = [['start']]
 end_paths = []

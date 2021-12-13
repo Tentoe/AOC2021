@@ -29,7 +29,8 @@ for digit in gamma:
         epsilon += "1"
 
 
-print(int(gamma,2) * int(epsilon,2))
+print(int(gamma, 2) * int(epsilon, 2))
+
 
 def timesOne(data, digit):
     times = 0
@@ -37,7 +38,7 @@ def timesOne(data, digit):
         if item[digit] == "1":
             times += 1
     return times
-        
+
 
 oxygen_data = open("day3.input").read().split("\n")
 
@@ -47,12 +48,12 @@ for digit in range(len(oxygen_data[0])):
         oxygen_data = list(filter(lambda x: x[digit] == "1", oxygen_data))
     else:
         oxygen_data = list(filter(lambda x: x[digit] == "0", oxygen_data))
-        
+
     if len(oxygen_data) == 1:
         break
 
 print(oxygen_data[0])
-oxygen = int(oxygen_data[0],2)
+oxygen = int(oxygen_data[0], 2)
 
 oxygen_data = open("day3.input").read().split("\n")
 
@@ -62,11 +63,11 @@ for digit in range(len(oxygen_data[0])):
         oxygen_data = list(filter(lambda x: x[digit] == "1", oxygen_data))
     else:
         oxygen_data = list(filter(lambda x: x[digit] == "0", oxygen_data))
-        
+
     if len(oxygen_data) == 1:
         break
 
 print(oxygen_data[0])
-co2 = int(oxygen_data[0],2)
+co2 = int(oxygen_data[0], 2)
 
 print(oxygen * co2)

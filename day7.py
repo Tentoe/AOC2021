@@ -9,15 +9,15 @@ min_pos = min(input_data)
 def getDiff(data, pos):
     diff = 0
     for crab in data:
-        diff += sum(range(1,abs(crab - pos)+1))        
+        diff += sum(range(1, abs(crab - pos)+1))
     return diff
 
 
 result = {}
 
 for pos in range(min_pos, max_pos+1):
-    
-    print(pos," von ", max_pos)
+
+    print(pos, " von ", max_pos)
     result[pos] = getDiff(input_data, pos)
 
 min_val = 9999999999999999999
@@ -28,8 +28,5 @@ for key, item in result.items():
         min_val = item
         target = key
 
-print("POS:",target)
-print("DIST:",result[target])
-
-    
-    
+print("POS:", target)
+print("DIST:", result[target])
