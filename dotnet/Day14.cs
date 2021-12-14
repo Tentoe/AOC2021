@@ -1,37 +1,61 @@
+using System.Text.RegularExpressions;
 class Day14
 {
     public static void main()
     {
         var read = new List<string>(File.ReadAllLines("day14.input"));
+
         var template = read[0];
+
+
         read.RemoveRange(0, 2);
-        var insert = read.Select(x =>
+        var changes = new Dictionary<string, (string, string)>();
+        foreach (var item in read)
         {
-            var sp = x.Split(" -> ", StringSplitOptions.None);
-            return ((sp[0], sp[1]));
-        }).ToArray();
-        // var cities = new Dictionary<string, string>() {
-        //     {"UK", "London, Manchester, Birmingham"},
-        //     {"USA", "Chicago, New York, Washington"},
-        //     {"India", "Mumbai, New Delhi, Pune"}
-        // };
-        // (int, int)[] test2 = { (1, 2) };
-        var changes = new List<(string, string)>();
-
-        foreach (var change in insert)
-        {
-            if (template.Contains(change.Item1))
-                changes.Add(change);
+            var sp = item.Split(" -> ", StringSplitOptions.None);
+            changes[sp[0]] = (sp[0][0] + sp[1], sp[1] + sp[0][1]);
         }
-        foreach ((var x, var y) in changes.OrderBy(x => template.IndexOf(x.Item1)))
+        var occurences = new Dictionary<string, long>();
+
+        foreach ((var x, var y) in changes)
         {
-            template = template.Replace(x, x[0].ToString() + y + x[1].ToString());
-            System.Console.WriteLine(x + " " + y);
-
-            System.Console.WriteLine(template);
+            occurences[x] = 0;
         }
-        System.Console.WriteLine(template);
 
+        for (int i = 0; i < template.Length - 1; i++)
+        {
+            var pair = template[i].ToString() + template[i + 1].ToString();
+            occurences[pair]++;
+        }
 
+        for (int i = 0; i < 40; i++)
+        {
+            System.Console.WriteLine(i);
+            var nextocc = new Dictionary<string, long>(occurences);
+            foreach (var item in occurences.Keys)
+            {
+                nextocc[item] -= occurences[item];
+                (var first, var second) = changes[item];
+                nextocc[first] += occurences[item];
+                nextocc[second] += occurences[item];
+            }
+            occurences = nextocc;
+        }
+        var counts = new Dictionary<char, long>();
+        foreach (var item in occurences.Keys)
+        {
+            //System.Console.WriteLine(item.ToString() + " " + occurences[item]);
+            if (counts.ContainsKey(item[0]))
+                counts[item[0]] += occurences[item];
+            else
+                counts[item[0]] = occurences[item];
+        }
+        counts[template.Last()]++;
+        foreach (var item in counts)
+        {
+            System.Console.WriteLine(item.Key.ToString() + " : " + item.Value.ToString());
+        }
+
+        System.Console.WriteLine(counts.Values.Max() - counts.Values.Min());
     }
 }
