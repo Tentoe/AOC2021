@@ -9,7 +9,6 @@ class Day17
             X = x;
             Y = y;
         }
-
         public double X { get; set; }
         public double Y { get; set; }
 
@@ -17,10 +16,15 @@ class Day17
 
         public override bool Equals(object? obj)
         {
-            if (!(obj is Point objt)) 
+            if (!(obj is Point objt))
                 return false;
-                
+
             return this.X == objt.X && this.Y == objt.Y;
+        }
+
+        public double Distance(Point p)
+        {
+            return Math.Sqrt(Math.Abs((X - p.X) * 2 + (Y - p.Y) * 2));
         }
     }
 
@@ -34,11 +38,30 @@ class Day17
                     select new Point(x, y)).ToList<Point>();
 
         //Step();
-        foreach (var item in test)
+        // foreach (var item in test)
+        // {
+        //     System.Console.WriteLine(item);
+        // }
+        System.Console.WriteLine(test.Contains(new Point(20, -11)));
+
+
+
+        while (true)
         {
-            System.Console.WriteLine(item);
+            Step();
+            System.Console.WriteLine(position);
+            if (test.Contains(position))
+            {
+                System.Console.WriteLine("HIT");
+                break;
+            }
+            if (position.Distance(test[0]) > 1000)
+            {
+                System.Console.WriteLine("MISS");
+                break;
+            }
+
         }
-        System.Console.WriteLine(new Point(0, 0).Equals(new Point(0, 0)));
     }
 
     private void Step()
@@ -49,7 +72,6 @@ class Day17
         if (velocity.X < 0) velocity.X++;
         else if (velocity.X > 0) velocity.X--;
         velocity.Y--;
-
 
     }
 }
