@@ -4,15 +4,15 @@ class Day17
     private Point position = new Point(0, 0);
     public struct Point
     {
-        public Point(double x, double y)
+        public Point(long x, long y)
         {
             X = x;
             Y = y;
         }
-        public double X { get; set; }
-        public double Y { get; set; }
+        public long X { get; set; }
+        public long Y { get; set; }
 
-        public override string ToString() => $"({X}, {Y})";
+        public override string ToString() => $"({X},{Y})";
 
         public override bool Equals(object? obj)
         {
@@ -31,37 +31,75 @@ class Day17
     public void main()
     {
         //var line = File.ReadAllLines("day17.input")[0];
-        velocity = new Point(6, 9);
 
-        var test = (from x in Enumerable.Range(20, 10)
-                    from y in Enumerable.Range(-10, 5)
+
+        //var xtarget = (20, 30);
+        var xtarget = (94, 151);
+        //var ytarget = (-10, -5);
+        var ytarget = (-156, -103);
+        var test = (from x in Enumerable.Range(xtarget.Item1, xtarget.Item2 - xtarget.Item1 + 1)
+                    from y in Enumerable.Range(ytarget.Item1, ytarget.Item2 - ytarget.Item1 + 1)
                     select new Point(x, y)).ToList<Point>();
+
+        var xvel = 1;
+        while (true)
+        {
+            var vel = (xvel * (xvel + 1)) / 2;
+            var vel2 = ((xvel + 1) * (xvel + 2)) / 2;
+            if (vel > xtarget.Item1 && vel < xtarget.Item2 && vel2 > xtarget.Item2)
+                break;
+            xvel++;
+        }
+        velocity = new Point(xvel, Math.Abs(ytarget.Item1) - 1);
 
         //Step();
         // foreach (var item in test)
         // {
         //     System.Console.WriteLine(item);
         // }
-        System.Console.WriteLine(test.Contains(new Point(20, -11)));
 
-
-
-        while (true)
+        var xval = Math.Max(xtarget.Item2, velocity.X);
+        var testen = (from x in Enumerable.Range(0, (int)xval + 1)
+                      from y in Enumerable.Range((int)-(velocity.Y + 1), (int)((velocity.Y + 1) * 2 + 1))
+                      select new Point(x, y)).ToList<Point>();
+        var solution = new List<Point>();
+        System.Console.WriteLine(test.Contains(new Point(27, -5)));
+        var count = 0;
+        foreach (var item in testen)
         {
-            Step();
-            System.Console.WriteLine(position);
-            if (test.Contains(position))
-            {
-                System.Console.WriteLine("HIT");
-                break;
-            }
-            if (position.Distance(test[0]) > 1000)
-            {
-                System.Console.WriteLine("MISS");
-                break;
-            }
+            System.Console.WriteLine($"{testen.Count} {count}");
+            count++;
+            position = new Point(0, 0);
 
+            velocity = new Point(item.X, item.Y);
+
+            if (new Point(30, -10).Equals(item))
+            {
+
+            }
+            long maxx = 0;
+            while (true)
+            {
+                Step();
+                if (position.Y > maxx)
+                    maxx = position.Y;
+                if (test.Contains(position))
+                {
+                    solution.Add(item);
+                    break;
+                }
+                if (position.X > xtarget.Item2 || position.Y < ytarget.Item1)
+                {
+                    break;
+                }
+
+            }
         }
+        foreach (var item in solution)
+        {
+            System.Console.WriteLine(item);
+        }
+
     }
 
     private void Step()
