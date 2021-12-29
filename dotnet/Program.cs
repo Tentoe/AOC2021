@@ -1,5 +1,4 @@
 ﻿
 
-var test = new Day17();
-test.main();
 
+Day18.main();
